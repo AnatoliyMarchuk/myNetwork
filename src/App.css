@@ -1,0 +1,40 @@
+.logo {
+	margin: 5px auto;
+	max-width: 50px;
+	max-height: 50px;
+}
+.app-wrapper {
+	grid-template-areas:
+		'h h'
+		'n c';
+	width: 1200px;
+	margin: 0 auto;
+
+	display: grid;
+	grid-template-rows: 60px 1fr;
+	grid-template-columns: 2fr 10fr;
+}
+.header {
+	grid-area: h;
+	background-color: #c2f5a7;
+}
+.nav {
+	grid-area: n;
+	background-color: aqua;
+}
+.content {
+	grid-area: c;
+	background-color: #aeb0ad;
+}
+.nav a {
+	margin-bottom: 5px auto;
+	display: block;
+}
+.content-ava {
+	max-width: 100px;
+	max-height: 100px;
+	margin-bottom: 10px;
+	margin-right: 10px;
+	margin-top: 10px;
+	margin-left: 10px;
+}
