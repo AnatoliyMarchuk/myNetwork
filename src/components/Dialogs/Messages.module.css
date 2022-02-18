@@ -1,0 +1,20 @@
+.dialogs {
+	display: grid;
+	grid-template-columns: 2fr 10fr;
+}
+.users {
+	padding: 10px;
+}
+
+.messages {
+	padding: 10px;
+	position: relative;
+	display: grid;
+	grid-template-columns: 6fr 6fr;
+	min-width: 0;
+
+	background-color: #fff;
+	background-clip: border-box;
+	border: 0 solid rgba(0, 0, 0, 0.125);
+	border-radius: 5px;
+}

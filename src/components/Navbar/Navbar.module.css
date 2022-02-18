@@ -1,0 +1,25 @@
+.nav {
+	grid-area: n;
+	box-shadow: 0 0 1.25rem 0 rgb(0 0 0 / 10%);
+	top: 4.688rem;
+	width: 250px;
+	height: 100%;
+	background: #fff;
+	transition: all 0.3s ease-in-out;
+}
+.nav a {
+	margin-bottom: 20px auto;
+	display: block;
+	text-decoration: none;
+	color: #50b5ff;
+}
+.item {
+	color: rgb(15, 15, 15);
+	margin: 10px 10px 10px 10px;
+}
+
+.item_Active {
+	color: rgb(212, 119, 32);
+	font-size: 20px;
+	margin-left: 20px;
+}
