@@ -9,6 +9,7 @@ function App() {
 			<Header />
 			<Navbar />
 			<Profile />
+			<Profile />
 		</div>
 	);
 }
