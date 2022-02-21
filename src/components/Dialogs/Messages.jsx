@@ -4,7 +4,6 @@ import DialogsItem from './DialogsItem/DialogsItem';
 import Message from './Message/Message';
 
 export default function Messages(props) {
-	console.log(props);
 	const dialogMessages = props.state.messageData.map((item, index) => {
 		return <Message message={item.message} key={index} />;
 	});

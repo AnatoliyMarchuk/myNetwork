@@ -2,6 +2,14 @@ import React from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
 export default function MyPosts(props) {
+	let newPostElement = React.createRef();
+
+	const addPost = () => {
+		let text = newPostElement.current.value;
+
+		alert(text);
+	};
+
 	const posts = props.postsData.map((item, index) => {
 		return (
 			<Post
@@ -18,9 +26,11 @@ export default function MyPosts(props) {
 			<div>
 				<h3>My posts</h3>
 				<div>
-					<textarea></textarea>
+					<textarea ref={newPostElement}></textarea>
 				</div>
-				<button className={`btn ${s.btn}`}>Add post</button>
+				<button onClick={addPost} className={`btn ${s.btn}`}>
+					Add post
+				</button>
 			</div>
 			<div>New post</div>
 			{posts}

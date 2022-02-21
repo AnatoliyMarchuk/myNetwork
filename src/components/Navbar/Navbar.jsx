@@ -27,8 +27,8 @@ export default function Navbar(props) {
 				<NavLink to="/settings" className={setActive}>
 					Settings
 				</NavLink>
+				<Sidebar state={props.state} />
 			</nav>
-			<Sidebar state={props.state} />
 		</>
 	);
 }
