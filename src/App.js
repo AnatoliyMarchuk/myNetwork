@@ -13,7 +13,8 @@ function App(props) {
 	return (
 		<div className="app-wrapper app-wrapper-content">
 			<Header />
-			<Navbar />
+			<Navbar state={props.state.sidebar} />
+
 			<div className=" app-wrapper-content">
 				<Routes>
 					<Route path="/" element={<HomePage />} />
