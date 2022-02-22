@@ -6,8 +6,9 @@ export default function MyPosts(props) {
 
 	const addPost = () => {
 		let text = newPostElement.current.value;
+		newPostElement.current.value = '';
 
-		alert(text);
+		props.addPost(text);
 	};
 
 	const posts = props.postsData.map((item, index) => {
