@@ -4,7 +4,6 @@ import s from './DialogsItem.module.css';
 
 export default function DialogsItem(props) {
 	const path = '/dialogs/' + props.id;
-	console.log(props);
 	const setActive = ({ isActive }) =>
 		isActive ? `${s.dialog_Active}` : `${s.dialog}`;
 
@@ -13,6 +12,8 @@ export default function DialogsItem(props) {
 			<NavLink className={setActive} to={path} img={props.img}>
 				<img src={props.img} alt="ava" />
 				{props.name}
+
+				<div> {props.message}</div>
 			</NavLink>
 		</div>
 	);

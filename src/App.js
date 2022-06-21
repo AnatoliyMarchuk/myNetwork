@@ -1,52 +1,64 @@
+import React, { Component, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Header from './components/Header/Header';
-import Navbar from './components/Navbar/Navbar';
-import Profile from './components/Profile/Profile';
 import './App.css';
 import HomePage from './components/HomePage/HomePage';
-import Music from './components/Music/Music';
-import News from './components/News/News';
+
 import Settings from './components/Settings/Settings';
-import Messages from './components/Dialogs/Messages';
+import MessagesContainer from './components/Dialogs/MessagesContainer';
+import ProfileContainer from './components/Profile/ProfileContainer';
+import Layout from './components/Navbar/Layout';
+import NotfoundPage from './components/NotfoundPage';
+import User from './components/Users/User';
+import LoginPage from './components/Login/LoginPage';
+import { connect } from 'react-redux';
+import { initialize } from './redux/appReducer';
+import Preloader from './commons/loader/Preloader';
+import UsersContainer from './components/Users/UsersContainer';
 
-function App(props) {
-	return (
-		<div className="app-wrapper app-wrapper-content">
-			<Header />
-			<Navbar state={props.state.sidebar} />
+// import News from '';
+const News = React.lazy(() => import('./components/News/News'));
+// const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
+class App extends Component {
+	componentDidMount() {
+		this.props.initialize();
+		// debugger;
+	}
+	// console.log('app', props);
+	render() {
+		if (!this.props.initialized) {
+			return <Preloader />;
+		}
 
-			<div className=" app-wrapper-content">
-				<Routes>
-					<Route path="/" element={<HomePage />} />
+		return (
+			<Routes>
+				<Route path='/' element={<Layout />}>
+					<Route index element={<HomePage />} />
+					<Route path='profile/*' element={<ProfileContainer />}>
+						<Route path=':userId' element={<User />} />
+					</Route>
+					<Route path='dialogs/*' element={<MessagesContainer />} />
+					<Route path='users/*' element={<UsersContainer />} />
 					<Route
-						path="profile"
+						path='news'
 						element={
-							<Profile
-								state={props.state.profilePage}
-								addPost={props.addPost}
-							/>
+							<div>
+								<Suspense fallback={<div>Завантаження...</div>}>
+									<News />
+								</Suspense>
+							</div>
 						}
 					/>
-					<Route
-						path="dialogs/*"
-						element={<Messages state={props.state.messagesPage} />}
-					/>
-					<Route path="music" element={<Music />} />
-					<Route path="news" element={<News />} />
-					<Route path="settings" element={<Settings />} />
-					<Route
-						path="*"
-						element={
-							<main>
-								{' '}
-								<p> There's nothing!</p>
-							</main>
-						}
-					/>
-				</Routes>
-			</div>
-		</div>
-	);
+					<Route path='login' element={<LoginPage />} />
+					<Route path='settings' element={<Settings />} />
+					<Route path='*' element={<NotfoundPage />} />
+				</Route>
+			</Routes>
+		);
+	}
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+	initialized: state.app.initialize,
+});
+
+export default connect(mapStateToProps, { initialize })(App);

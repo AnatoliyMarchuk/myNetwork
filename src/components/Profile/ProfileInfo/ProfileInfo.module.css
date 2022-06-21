@@ -3,3 +3,41 @@
 	font-size: 22px;
 	text-align: center;
 }
+.description_block img {
+	border-radius: 5px !important;
+	width: auto !important;
+	max-width: 100%;
+	height: auto;
+	vertical-align: middle;
+}
+.description_job img {
+	max-width: 10%;
+}
+.contacts {
+	color: #48a3e6;
+	background-color: rgba(80, 181, 255, 0.2) !important;
+	border-radius: 10px !important;
+	box-sizing: border-box;
+	/* display: grid; */
+}
+.title {
+	grid-area: A;
+}
+.description {
+	/* grid-area: B; */
+	align-content: center;
+	display: flex;
+	flex-wrap: wrap;
+}
+.description_name {
+	flex: 0 0 auto;
+	width: 25%;
+}
+.description_content p {
+	margin-top: 0;
+	margin-bottom: 1rem;
+}
+.img {
+	max-width: 50% !important;
+	border-radius: 10px !important;
+}
