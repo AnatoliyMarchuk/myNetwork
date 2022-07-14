@@ -5,7 +5,6 @@ import s from './MyPosts.module.css';
 import Post from './Post/Post';
 
 export default function MyPosts(props) {
-	console.log('render', props);
 	const posts = props.posts.map((item, index) => {
 		return <Post message={item.message} count={item.count} img={item.img} key={index} />;
 	});

@@ -7,6 +7,7 @@ const initialValues = {
 	email: '',
 	password: '',
 	rememberMe: '',
+	captcha: '',
 };
 
 const validationSchema = Yup.object().shape({
@@ -15,17 +16,17 @@ const validationSchema = Yup.object().shape({
 	password: Yup.string().min(5, 'Min 5 symbol!!!').required('Required'),
 });
 
-export default function LoginForm(props) {
+export default function LoginForm({ userLogin, captchaUrl, login }) {
 	const onSubmit = (values, { setSubmitting, setStatus, resetForm }) => {
 		console.log('Form data:', values);
-		props.userLogin(values.email, values.password, values.rememberMe, setStatus);
+		userLogin(setStatus, values.email, values.password, values.rememberMe, values.captcha);
 		setSubmitting(false);
 		resetForm();
 	};
 	return (
 		<Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-			{({ status, values, ...formik }) => {
-				console.log('Formik props:', formik);
+			{({ status, values }) => {
+				// console.log('Formik props:', formik);
 				return (
 					<Form>
 						<div className={s.login_form}>
@@ -40,11 +41,21 @@ export default function LoginForm(props) {
 								<Field type='password' id='password' name='password' className='form-control' />
 								<ErrorMessage name='password' component={TextError} />
 							</div>
+							{captchaUrl && <img alt='some URL' src={captchaUrl} />}
+
 							<Field type='checkbox' name='rememberMe' />
 							<button type='submit' className={`${s.btn} btn`}>
 								Submit
 							</button>
-							<div>{values.general ? <span>{values.general}</span> : null}</div>
+
+							{captchaUrl && (
+								<div className={s.field}>
+									<label htmlFor='captcha'>captcha</label>
+									<Field type='captcha' id='captcha' name='captcha' className='form-control' />
+									<ErrorMessage name='captcha' component={TextError} />
+								</div>
+							)}
+							{/* <div>{values.general ? <span>{values.general}</span> : null}</div> */}
 						</div>
 					</Form>
 				);

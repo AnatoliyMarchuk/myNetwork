@@ -9,7 +9,7 @@ export default class ProfileStatus extends Component {
 	activateEditMode = () => {
 		this.setState({ editMode: true });
 	};
-	deactivateEditMode = () => {
+	deActivateEditMode = () => {
 		this.setState({ editMode: false });
 		this.props.updateUserStatus(this.state.status);
 	};
@@ -35,7 +35,7 @@ export default class ProfileStatus extends Component {
 						<input
 							onChange={this.onStatusChange}
 							autoFocus={true}
-							onBlur={this.deactivateEditMode}
+							onBlur={this.deActivateEditMode}
 							value={this.state.status}
 						/>
 					</div>

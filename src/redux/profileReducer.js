@@ -2,7 +2,9 @@ import { usersAPI, profileAPI } from '../api/api';
 
 const ADD_POST = 'ADD_POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const SET_USER_UPDATE_PROFILE = 'SET_USER_UPDATE_PROFILE';
 const SET_STATUS = 'SET_STATUS';
+const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS';
 
 let initialState = {
 	posts: [
@@ -45,8 +47,15 @@ const profileReducer = (state = initialState, action) => {
 		case SET_USER_PROFILE: {
 			return { ...state, profile: action.profile };
 		}
+
+		case SET_USER_UPDATE_PROFILE: {
+			return { ...state, profile: action.profileData };
+		}
 		case SET_STATUS: {
 			return { ...state, status: action.status };
+		}
+		case SAVE_PHOTO_SUCCESS: {
+			return { ...state, profile: { ...state.profile, photos: action.photos } };
 		}
 
 		default:
@@ -60,11 +69,20 @@ export let setUserProfile = (profile) => ({
 	type: SET_USER_PROFILE,
 	profile,
 });
-export let setStatus = (status) => ({
+
+export let setUserStatus = (status) => ({
 	type: SET_STATUS,
 	status,
 });
-
+export let savePhotoSuccess = (photos) => ({
+	type: SAVE_PHOTO_SUCCESS,
+	photos,
+});
+export let setUserUpdateProfile = (photos) => ({
+	type: SAVE_PHOTO_SUCCESS,
+	photos,
+});
+// THUNK
 export const getUserProfile = (profileId) => {
 	return async (dispatch) => {
 		const data = await usersAPI.getProfile(profileId);
@@ -75,7 +93,7 @@ export const getUserStatus = (profileId) => {
 	return async (dispatch) => {
 		const data = await profileAPI.getStatus(profileId);
 		// debugger;
-		dispatch(setStatus(data));
+		dispatch(setUserStatus(data));
 	};
 };
 export const updateUserStatus = (status) => {
@@ -83,7 +101,34 @@ export const updateUserStatus = (status) => {
 		const data = await profileAPI.updateStatus(status);
 		if (data.resultCode === 0) {
 			// debugger;
-			dispatch(setStatus(status));
+			dispatch(setUserStatus(status));
+		}
+	};
+};
+export const updateProfile = (profile, setStatus, goToEditMode) => {
+	return async (dispatch, getState) => {
+		const data = await profileAPI.updateProfile(profile);
+
+		if (data.resultCode === 0) {
+			const userId = getState().auth.userId;
+
+			if (userId) {
+				await dispatch(getUserProfile(userId));
+				goToEditMode(false);
+			}
+		} else {
+			let message = data.messages.length > 0 ? data.messages.join(' ') : 'Some error!';
+			console.log(message);
+
+			setStatus(message); //Function Formik
+		}
+	};
+};
+export const savePhoto = (file) => {
+	return async (dispatch) => {
+		const data = await profileAPI.savePhoto(file);
+		if (data.resultCode === 0) {
+			dispatch(savePhotoSuccess(data.data.photos));
 		}
 	};
 };

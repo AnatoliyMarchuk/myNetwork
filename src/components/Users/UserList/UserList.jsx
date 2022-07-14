@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './User.module.css';
-import userPhoto from '../../../assets/img/AvaDefolt.png';
+import userPhoto from '../../../assets/img/AvaDefault.png';
 
 import { NavLink, Outlet } from 'react-router-dom';
 
